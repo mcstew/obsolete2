@@ -13,7 +13,7 @@ app.use(express.json());
 console.log("Setting up API endpoint...");
 
 app.post('/api/chat', async (req, res) => {
-  const api_key = "OPENAI_KEY_HERE"; // Replace with your OpenAI API key
+  const api_key = process.env.openai_api; // Replace with your OpenAI API key
 
   // Log: Received API call
   console.log("Received API call to /api/chat");
