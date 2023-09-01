@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple GPT-3.5 Turbo Chat</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    #chat-container {
+      max-width: 960px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #chat-output {
+      height: 400px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      padding: 20px;
+      /* Added padding */
+      margin-bottom: 20px;
+    }
+
+    #chat-input {
+      width: 80%;
+      padding: 10px;
+    }
+
+    button {
+      width: 18%;
+      padding: 11px;
+      margin-top: 11px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="chat-container">
+    <h1>Simple GPT-3.5 Turbo Chat</h1>
+
+    <div id="chat-output">
+      <!-- Chat messages will appear here -->
+    </div>
+
+    <div>
+      <input type="text" id="chat-input" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      console.log("Sending message...");
+      const chatInput = document.getElementById("chat-input");
+      const chatOutput = document.getElementById("chat-output");
+      const userInput = chatInput.value;
+
+      // Replace the following URL with the URL Replit gives you after you run your project
+const serverUrl = "https://obsolete.mcstew.repl.co/api/chat";
+
+      axios
+        .post(serverUrl, {userInput: userInput})
+        .then((response) => {
+          const botReply = response.data.message;
+          chatOutput.innerHTML += `<p>User: ${userInput}</p>`;
+          chatOutput.innerHTML += `<p>Bot: ${botReply}</p>`;
+          chatOutput.scrollTop = chatOutput.scrollHeight; // Auto-scroll to the bottom
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          chatOutput.innerHTML += `<p>Bot: Sorry, I couldn't process that request.</p>`;
+        });
+
+      chatInput.value = ""; // Clear the input field
+    }
+  </script>
+</body>
+
+</html>
